@@ -1,0 +1,42 @@
+FROM apache/airflow:2.1.4
+USER root
+# install some base utilities
+RUN apt update && apt install build-essential -y build-essential tdsodbc freetds-dev freetds-bin unixodbc unixodbc-dev libssl-dev libffi-dev python3.7-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install curl -y
+
+# RUN pip install pyodbc
+RUN pip install --trusted-host pypi.python.org pymssql
+
+# install mssql-tools
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update && ACCEPT_EULA=Y apt-get install msodbcsql17 -y
+RUN ACCEPT_EULA=Y apt-get install mssql-tools -y
+
+# update bash configuration
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+
+# update OpenSSL configuration file
+RUN sed -i 's/TLSv1\.2/TLSv1.0/g' /etc/ssl/openssl.cnf
+RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
+
+RUN pip install pymssql
+
+
+# -------------------------
+#FROM apache/airflow:2.1.4
+
+# USER root
+# Stack overflow suggested installing the following before pyodbc
+# This did not work, so pymssql was used instead. 
+# RUN sudo apt-get update && apt-get install -y --no-install-recommends \
+#     python-pip \
+#     python3-dev \
+#     unixodbc-dev \
+#     unixodbc \
+#     libpq-dev 
+# RUN pip install pyodbc
+
+# RUN pip install pymssql
+# RUN pip install pypyodbc
