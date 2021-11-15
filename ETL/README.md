@@ -19,7 +19,7 @@ Once the file(s) have been imported, a stored proc is run to process the data in
 NOTE: The format of the csv files and subsequent data changed from January 2020 until current date. There was some manual cleanup of the data that was necessary.
 
 
-![SSIS Graph View](https://github.com/Beaver67/DataAnalytics/tree/main/Assets/SSIS_ETL.png)
+![SSIS Graph View](https://github.com/Beaver67/DataAnalytics/blob/main/Assets/SSIS_ETL.png)
 
 ## Airflow
 
