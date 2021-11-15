@@ -27,7 +27,7 @@ Airflow was used to import the same Covid data as the SSIS file. Python was used
 
 Data was imported into a local SQL Server DB housed in a Docker container (beaver67/DevOps/Docker/main/README.md).
 
-![DAG Graph View](beaver67/dataanalytics/assets/CovidAirflow.png)
+![DAG Graph View](assets/CovidAirflow.png)
 
 ## Tech Stack
 
